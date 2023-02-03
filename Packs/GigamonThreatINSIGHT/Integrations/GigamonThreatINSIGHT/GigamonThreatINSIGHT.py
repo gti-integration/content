@@ -812,6 +812,15 @@ def commandFetchIncidents(detectionClient: DetectionClient, account_uuid, params
             'sort_order': 'asc',
             'limit': max_results}
 
+    if not params.get('muted', False):
+        args['muted'] = False
+
+    if not params.get('muted_device', False):
+        args['muted_device'] = False
+
+    if not params.get('muted_rule', False):
+        args['muted_rule'] = False
+
     if account_uuid:
         args['account_uuid'] = account_uuid
 
