@@ -269,7 +269,7 @@ class DetectionClient(Client):
             data=json.dumps(data)
         )
 
-    def resolveDetection(self, detection_id: str, data=None) -> Dict[str, Any]:
+    def resolveDetection(self, detection_id: str, data=None):
         """ Calls the Put /detections/{detection_id}/resolve endpoint to
         resolve the provided detection
             :param str detection_id: the detection to be resolved
@@ -284,7 +284,8 @@ class DetectionClient(Client):
         return self._http_request(
             method='Put',
             url_suffix='detections/' + detection_id + '/resolve',
-            data=json.dumps(data)
+            data=json.dumps(data),
+            return_empty_response=True
         )
 
 
@@ -401,7 +402,7 @@ def formatEvents(r_json):
     return newData
 
 
-def getFirstFetch(first_fetch_str) -> dict[str, Any]:
+def getFirstFetch(first_fetch_str) -> datetime:
 
     if not first_fetch_str or not first_fetch_str.strip():
         first_fetch_str = "7 days"
@@ -1004,7 +1005,7 @@ def commandResolveDetection(detectionClient: DetectionClient, args):
     detection_uuid = args.pop('detection_uuid')
     result = detectionClient.resolveDetection(detection_uuid, args)
 
-    if not result:
+    if not result or not result.content:
         return CommandResults(
             readable_output='Detection resolved successfully'
         )
