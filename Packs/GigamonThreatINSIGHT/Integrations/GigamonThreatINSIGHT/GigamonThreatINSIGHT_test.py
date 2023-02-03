@@ -294,7 +294,7 @@ def test_resolve_detection(requests_mock):
     from GigamonThreatINSIGHT import Client, DetectionClient, commandResolveDetection
     detection_uuid = getRandomString(10)
 
-    requests_mock.put(f'https://detections.icebrg.io/v1/detections/{detection_uuid}/resolve', json="")
+    requests_mock.put(f'https://detections.icebrg.io/v1/detections/{detection_uuid}/resolve', content=None, status_code=204)
 
     client: DetectionClient = Client.getClient('Detections', '')
 
