@@ -20,24 +20,32 @@ DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
 
 class Client(BaseClient):
     @staticmethod
-    def getUrl(api) -> str:
+    def getUrl(api, testing=False) -> str:
         """Provide the base url to access the specific API.
         :param str api:  The specific API for which we need the base url.
         return: The requested base url
         rtype str
         """
         url: str = ''
-        if api == 'Detections':
-            url = 'https://detections.icebrg.io/v1/'
-        elif api == 'Sensors':
-            url = 'https://sensor.icebrg.io/v1/'
-        elif api == 'Entity':
-            url = 'https://entity.icebrg.io/v1/entity/'
+        if testing:
+            if api == 'Detections':
+                url = 'https://detections-uat.icebrg.io/v1/'
+            elif api == 'Sensors':
+                url = 'https://sensor-uat.icebrg.io/v1/'
+            elif api == 'Entity':
+                url = 'https://entity-uat.icebrg.io/v1/entity/'
+        else:
+            if api == 'Detections':
+                url = 'https://detections.icebrg.io/v1/'
+            elif api == 'Sensors':
+                url = 'https://sensor.icebrg.io/v1/'
+            elif api == 'Entity':
+                url = 'https://entity.icebrg.io/v1/entity/'
 
         return url
 
     @staticmethod
-    def getClient(api, api_key):
+    def getClient(api, api_key, testing=False):
         """Provide the required Client instance to interact with
         the specific API.
         :param str api:  The specific API we need to interact with.
@@ -54,17 +62,17 @@ class Client(BaseClient):
         match api:
             case 'Entity':
                 return EntityClient(
-                    base_url=Client.getUrl(api),
+                    base_url=Client.getUrl(api, testing),
                     headers=headers
                 )
             case 'Sensors':
                 return SensorClient(
-                    base_url=Client.getUrl(api),
+                    base_url=Client.getUrl(api, testing),
                     headers=headers
                 )
             case 'Detections':
                 return DetectionClient(
-                    base_url=Client.getUrl(api),
+                    base_url=Client.getUrl(api, testing),
                     headers=headers
                 )
 
@@ -1034,16 +1042,17 @@ def main():
 
     # initialize common args
     api_key = params.get('api_key')
+    testing = params.get('testing')
     account_uuid = params.get('account_uuid')
 
     # attempt command execution
     try:
-        entityClient: EntityClient = Client.getClient('Entity', api_key)
+        entityClient: EntityClient = Client.getClient('Entity', api_key, testing)
 
-        sensorClient: SensorClient = Client.getClient('Sensors', api_key)
+        sensorClient: SensorClient = Client.getClient('Sensors', api_key, testing)
 
         detectionClient: DetectionClient = Client.getClient(
-            'Detections', api_key
+            'Detections', api_key, testing
         )
 
         if command == 'test-module':

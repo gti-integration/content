@@ -10,23 +10,27 @@ configuration:
   name: api_key
   type: 4
   required: true
+- display: Connect to UAT Environment
+  name: testing
+  defaultvalue: 'false'
+  type: 8
 - display: First fetch timestamp (<number> <time unit>, e.g., 12 hours, 7 days)
   name: first_fetch
-  defaultvalue: 7 days
   type: 0
   required: true
+  defaultvalue: 7 days
 - display: Include muted detections
   name: muted
-  type: 8
   defaultvalue: 'false'
-- display: Include muted devices
+  type: 8
+- display: 'Include muted devices'
   name: muted_device
-  defaultvalue: 'false'
   type: 8
-- display: 'Include muted rules'
+  defaultvalue: 'false'
+- display: Include muted rules
   name: muted_rule
-  type: 8
   defaultvalue: 'false'
+  type: 8
 - display: Fetch incidents
   name: isFetch
   type: 8
@@ -904,7 +908,7 @@ script:
       description: List of event fields to check for impacted devices
     description: Create a new detection rule.
 
-  dockerimage: demisto/python3:3.10.9.46807
+  dockerimage: demisto/python3:3.10.10.47713
   isfetch: true
   runonce: false
   subtype: python3

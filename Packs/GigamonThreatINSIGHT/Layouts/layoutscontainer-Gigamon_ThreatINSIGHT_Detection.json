@@ -366,6 +366,8 @@
         ]
     },
     "fromVersion": "6.5.0",
-    "description": "",
-    "marketplaces": ["xsoar"]
+    "marketplaces": [
+        "xsoar"
+    ],
+    "description": ""
 }
