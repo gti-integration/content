@@ -815,7 +815,7 @@ def commandFetchIncidents(detectionClient: DetectionClient, account_uuid, params
         max_results = MAX_DETECTIONS
 
     args = {'created_or_shared_start_date': last_fetch.strftime(DATE_FORMAT),
-            'include': 'rules',
+            'include': 'rules,indicators',
             'sort_by': 'first_seen',
             'sort_order': 'asc',
             'limit': max_results}
